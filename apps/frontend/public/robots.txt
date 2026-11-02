@@ -1,0 +1,14 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /admin
+Disallow: /api/admin/
+Disallow: /login
+Disallow: /dashboard
+
+# Cho phép đọc toàn bộ trang bán hàng công khai
+Allow: /
+Allow: /thiet-bi-lam-banh/
+Allow: /products/
+Allow: /kho-may/
+
+Sitemap: https://congnguyen.com.vn/sitemap.xml

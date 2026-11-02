@@ -1,0 +1,33 @@
+name: Auto Deploy to Production VPS
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH and Deploy on VPS
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: 22
+          script: |
+            export PATH=$PATH:/usr/local/bin:/usr/bin:~/.nvm/versions/node/$(ls ~/.nvm/versions/node 2>/dev/null | tail -n 1)/bin
+            cd /www/wwwroot/congnguyen
+            git fetch origin main
+            git reset --hard origin/main
+            npm install
+            npx prisma generate
+            npx prisma db push --accept-data-loss
+            npx ts-node apps/backend/prisma/seed.ts || true
+            npx ts-node apps/backend/prisma/normalize-urls.ts || true
+            mkdir -p public/uploads apps/backend/public/uploads apps/frontend/public/uploads
+            chmod -R 755 public/uploads apps/backend/public/uploads apps/frontend/public/uploads 2>/dev/null || true
+            npm run build --workspace=apps/frontend
+            npm run build --workspace=apps/backend
+            pm2 startOrReload ecosystem.config.js --update-env || pm2 reload ecosystem.config.js || pm2 restart all || true
+            pm2 save || true

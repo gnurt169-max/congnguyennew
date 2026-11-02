@@ -1,0 +1,803 @@
+{
+  "exportedAt": "2026-11-02T12:24:27.607Z",
+  "version": "1.0.0",
+  "stats": {
+    "products": 8,
+    "categories": 4,
+    "brands": 4
+  },
+  "data": {
+    "categories": [
+      {
+        "id": "04d49917-baf9-4b8d-9afc-ddd3cdc1bdb1",
+        "name": "Tủ trưng bày bánh kem & Bảo quản",
+        "slug": "tu-trung-bay-banh",
+        "description": "Tủ bánh kem kính đứng 1m5, 1m8 5 tầng, tủ mát 2 cánh lùa, tủ bảo quản 2 cánh mở Ruyshing Đài Loan.",
+        "imageUrl": null,
+        "parentId": null,
+        "sortOrder": 1,
+        "isActive": true,
+        "createdAt": "2026-10-30T13:57:15.529Z",
+        "updatedAt": "2026-11-01T12:31:06.705Z"
+      },
+      {
+        "id": "0badf3ea-5a33-4f27-a07c-d2ef29a55b5e",
+        "name": "Lò nướng bánh công nghiệp",
+        "slug": "lo-nuong-cong-nghiep",
+        "description": "Lò nướng điện 1 tầng 2 khay Hewwu, lò nướng đối lưu 4 mâm Trung Quốc mới 100%, lò nướng đối lưu Southstar 4 mâm.",
+        "imageUrl": null,
+        "parentId": null,
+        "sortOrder": 2,
+        "isActive": true,
+        "createdAt": "2026-10-30T13:57:15.543Z",
+        "updatedAt": "2026-11-01T12:31:06.706Z"
+      },
+      {
+        "id": "59619327-f4cb-4f20-b8b9-38f071fb74ed",
+        "name": "Máy trộn bột & Đánh trứng",
+        "slug": "may-tron-bot-danh-trung",
+        "description": "Cối đánh trứng / Trộn bột Đài Loan Hobat bền bỉ, đa tốc độ đánh kem, đánh trứng, nhào bột.",
+        "imageUrl": null,
+        "parentId": null,
+        "sortOrder": 3,
+        "isActive": true,
+        "createdAt": "2026-10-30T13:57:15.553Z",
+        "updatedAt": "2026-11-01T12:31:06.707Z"
+      },
+      {
+        "id": "7f948635-045e-4124-ad6f-4f26b2d8b5c1",
+        "name": "Thiết bị tạo hình & Phụ trợ",
+        "slug": "thiet-bi-phu-tro",
+        "description": "Máy chia vê bột, máy cán bột 2 chiều, xe đẩy khay inox và phụ kiện dây chuyền làm bánh",
+        "imageUrl": null,
+        "parentId": null,
+        "sortOrder": 4,
+        "isActive": true,
+        "createdAt": "2026-10-30T15:08:54.867Z",
+        "updatedAt": "2026-11-01T12:31:06.708Z"
+      }
+    ],
+    "brands": [
+      {
+        "id": "b50745c6-00d4-45a8-b7af-8b7a0107e1a0",
+        "name": "Hewwu",
+        "slug": "hewwu",
+        "logoUrl": null,
+        "originCountry": "Trung Quốc",
+        "description": "Nhà sản xuất lò nướng điện tầng và thiết bị nhiệt bánh ngọt uy tín.",
+        "website": null,
+        "isActive": true,
+        "createdAt": "2026-10-30T13:57:15.575Z",
+        "updatedAt": "2026-11-01T12:31:06.708Z"
+      },
+      {
+        "id": "19d55fd9-dc72-4deb-b91b-525bc708594a",
+        "name": "Hobat",
+        "slug": "hobat",
+        "logoUrl": null,
+        "originCountry": "Đài Loan",
+        "description": "Thương hiệu máy trộn bột và cối đánh trứng đa năng cơ khí chính xác bền bỉ.",
+        "website": null,
+        "isActive": true,
+        "createdAt": "2026-10-30T13:57:15.569Z",
+        "updatedAt": "2026-11-01T12:31:06.709Z"
+      },
+      {
+        "id": "e6a82278-fb04-4a8a-a6ee-4032cb37f8cc",
+        "name": "Ruyshing",
+        "slug": "ruyshing",
+        "logoUrl": null,
+        "originCountry": "Đài Loan",
+        "description": "Thương hiệu tủ trưng bày và tủ mát bảo quản bánh kem hàng đầu Đài Loan.",
+        "website": null,
+        "isActive": true,
+        "createdAt": "2026-10-30T13:57:15.559Z",
+        "updatedAt": "2026-11-01T12:31:06.710Z"
+      },
+      {
+        "id": "12c3d50f-7e89-4f89-9fff-23be0503b26f",
+        "name": "Southstar",
+        "slug": "southstar",
+        "logoUrl": null,
+        "originCountry": "Trung Quốc",
+        "description": "Thương hiệu lò nướng đối lưu, lò nướng tầng công nghiệp danh tiếng toàn cầu.",
+        "website": null,
+        "isActive": true,
+        "createdAt": "2026-10-30T13:57:15.578Z",
+        "updatedAt": "2026-11-01T12:31:06.711Z"
+      }
+    ],
+    "products": [
+      {
+        "id": "f7f288a3-c83a-407c-bb4a-c537a43e691f",
+        "name": "Lò nướng đối lưu Southstar 4 mâm",
+        "slug": "lo-nuong-doi-luu-southstar-4-mam",
+        "modelCode": "SS-4M-90",
+        "summary": "Lò nướng đối lưu 4 mâm thương hiệu nổi tiếng Southstar, có chế độ phun sương tạo ẩm, vỏ máy inox sáng đẹp, mới 90%.",
+        "description": "Lò nướng đối lưu 4 mâm thương hiệu nổi tiếng Southstar, có chế độ phun sương tạo ẩm, vỏ máy inox sáng đẹp, mới 90%.",
+        "brandId": "12c3d50f-7e89-4f89-9fff-23be0503b26f",
+        "categoryId": "0badf3ea-5a33-4f27-a07c-d2ef29a55b5e",
+        "isQuoteOnly": false,
+        "condition": "EXCELLENT_90_95",
+        "availability": "AVAILABLE",
+        "stock": 1,
+        "soldCount": 0,
+        "status": "available",
+        "originalPrice": "35000000",
+        "refurbishDetails": "Đã thay mới toàn bộ vòng bi bạc đạn SKF Thụy Điển, thay mới cặp dây curoa Bando Japan, căn chỉnh đồng trục motor, vệ sinh đánh bóng cối Inox SUS304.",
+        "testVideoUrl": null,
+        "inspectionChecklist": null,
+        "basePrice": "25000000",
+        "minPrice": "25000000",
+        "maxPrice": "25000000",
+        "currency": "VND",
+        "specSheetPdfUrl": null,
+        "manualPdfUrl": null,
+        "imageUrl": "/uploads/products/lo-nuong-southstar.webp",
+        "thumbnail": "/uploads/products/lo-nuong-southstar.webp",
+        "images": [
+          "/uploads/products/lo-nuong-southstar.webp"
+        ],
+        "videoUrl": null,
+        "warrantyMonths": 12,
+        "isFeatured": true,
+        "isActive": true,
+        "createdAt": "2026-10-30T13:57:15.648Z",
+        "updatedAt": "2026-11-01T12:31:06.712Z",
+        "variants": [
+          {
+            "id": "d4bb095d-9df0-4e61-96c0-2239f4bea43f",
+            "productId": "f7f288a3-c83a-407c-bb4a-c537a43e691f",
+            "sku": "SS-4M-380V",
+            "name": "Lò nướng đối lưu Southstar 4 mâm",
+            "price": "25000000",
+            "originalPrice": "35000000",
+            "stockQuantity": 1,
+            "isQuoteOnly": false,
+            "powerType": "THREE_PHASE_380V",
+            "powerKw": null,
+            "weightKg": null,
+            "dimensions": null,
+            "barcode": null,
+            "isActive": true,
+            "createdAt": "2026-10-30T13:57:15.653Z",
+            "updatedAt": "2026-11-01T12:31:06.714Z"
+          }
+        ]
+      },
+      {
+        "id": "e1eba9df-33c5-4b55-9bce-01f53041feb3",
+        "name": "Lò nướng đối lưu 4 mâm Trung Quốc (Hàng mới 100%)",
+        "slug": "lo-nuong-doi-luu-4-mam-trung-quoc-moi-100",
+        "modelCode": "CV-4T-NEW",
+        "summary": "Lò nướng đối lưu 4 khay mới tinh chưa qua sử dụng, có quạt gió tuần hoàn giúp vỏ bánh chín vàng đều màu, xả kho giá sốc.",
+        "description": "Lò nướng đối lưu 4 khay mới tinh chưa qua sử dụng, có quạt gió tuần hoàn giúp vỏ bánh chín vàng đều màu, xả kho giá sốc.",
+        "brandId": null,
+        "categoryId": "0badf3ea-5a33-4f27-a07c-d2ef29a55b5e",
+        "isQuoteOnly": false,
+        "condition": "LIKE_NEW_99",
+        "availability": "AVAILABLE",
+        "stock": 1,
+        "soldCount": 0,
+        "status": "available",
+        "originalPrice": "18000000",
+        "refurbishDetails": "Đã thay mới toàn bộ vòng bi bạc đạn SKF Thụy Điển, thay mới cặp dây curoa Bando Japan, căn chỉnh đồng trục motor, vệ sinh đánh bóng cối Inox SUS304.",
+        "testVideoUrl": null,
+        "inspectionChecklist": null,
+        "basePrice": "10000000",
+        "minPrice": "10000000",
+        "maxPrice": "10000000",
+        "currency": "VND",
+        "specSheetPdfUrl": null,
+        "manualPdfUrl": null,
+        "imageUrl": "/uploads/products/lo-nuong-doi-luu-4-mam-trung-quoc.webp",
+        "thumbnail": "/uploads/products/lo-nuong-doi-luu-4-mam-trung-quoc.webp",
+        "images": [
+          "/uploads/products/lo-nuong-doi-luu-4-mam-trung-quoc.webp"
+        ],
+        "videoUrl": null,
+        "warrantyMonths": 12,
+        "isFeatured": true,
+        "isActive": true,
+        "createdAt": "2026-10-30T13:57:15.641Z",
+        "updatedAt": "2026-11-01T12:31:06.715Z",
+        "variants": [
+          {
+            "id": "e2eb7a19-4a56-430e-aa09-1071c070a830",
+            "productId": "e1eba9df-33c5-4b55-9bce-01f53041feb3",
+            "sku": "CV-4T-220V",
+            "name": "Lò nướng đối lưu 4 mâm Trung Quốc (Hàng mới 100%)",
+            "price": "10000000",
+            "originalPrice": "18000000",
+            "stockQuantity": 1,
+            "isQuoteOnly": false,
+            "powerType": "SINGLE_PHASE_220V",
+            "powerKw": null,
+            "weightKg": null,
+            "dimensions": null,
+            "barcode": null,
+            "isActive": true,
+            "createdAt": "2026-10-30T13:57:15.644Z",
+            "updatedAt": "2026-11-01T12:31:06.716Z"
+          }
+        ]
+      },
+      {
+        "id": "db945bf9-cde9-4818-937b-74ff95de3588",
+        "name": "Lò nướng điện 1 tầng 2 khay Hewwu Trung Quốc",
+        "slug": "lo-nuong-dien-1-tang-2-khay-hewwu-trung-quoc",
+        "modelCode": "HW-1D2T",
+        "summary": "Lò nướng tầng điện thương hiệu Hewwu, 2 mặt lửa trên dưới tùy chỉnh độc lập, thích hợp nướng bánh bông lan, bánh trung thu, bánh mì.",
+        "description": "Lò nướng tầng điện thương hiệu Hewwu, 2 mặt lửa trên dưới tùy chỉnh độc lập, thích hợp nướng bánh bông lan, bánh trung thu, bánh mì.",
+        "brandId": "b50745c6-00d4-45a8-b7af-8b7a0107e1a0",
+        "categoryId": "0badf3ea-5a33-4f27-a07c-d2ef29a55b5e",
+        "isQuoteOnly": false,
+        "condition": "FAIR_80",
+        "availability": "AVAILABLE",
+        "stock": 1,
+        "soldCount": 0,
+        "status": "available",
+        "originalPrice": "10500000",
+        "refurbishDetails": "Đã thay mới toàn bộ vòng bi bạc đạn SKF Thụy Điển, thay mới cặp dây curoa Bando Japan, căn chỉnh đồng trục motor, vệ sinh đánh bóng cối Inox SUS304.",
+        "testVideoUrl": null,
+        "inspectionChecklist": null,
+        "basePrice": "7000000",
+        "minPrice": "7000000",
+        "maxPrice": "7000000",
+        "currency": "VND",
+        "specSheetPdfUrl": null,
+        "manualPdfUrl": null,
+        "imageUrl": "/uploads/products/lo-nuong-hewwu.webp",
+        "thumbnail": "/uploads/products/lo-nuong-hewwu.webp",
+        "images": [
+          "/uploads/products/lo-nuong-hewwu.webp"
+        ],
+        "videoUrl": null,
+        "warrantyMonths": 12,
+        "isFeatured": true,
+        "isActive": true,
+        "createdAt": "2026-10-30T13:57:15.634Z",
+        "updatedAt": "2026-11-01T12:31:06.717Z",
+        "variants": [
+          {
+            "id": "fb6e369f-1e01-4d0a-8b0a-fa313dacdce7",
+            "productId": "db945bf9-cde9-4818-937b-74ff95de3588",
+            "sku": "HW-1D2T-220V",
+            "name": "Lò nướng điện 1 tầng 2 khay Hewwu Trung Quốc",
+            "price": "7000000",
+            "originalPrice": "10500000",
+            "stockQuantity": 1,
+            "isQuoteOnly": false,
+            "powerType": "SINGLE_PHASE_220V",
+            "powerKw": null,
+            "weightKg": null,
+            "dimensions": null,
+            "barcode": null,
+            "isActive": true,
+            "createdAt": "2026-10-30T13:57:15.638Z",
+            "updatedAt": "2026-11-01T12:31:06.718Z"
+          }
+        ]
+      },
+      {
+        "id": "d0d28ec9-cc2c-4d03-92b6-59cf14ad652a",
+        "name": "Cối đánh trứng / Trộn bột Đài Loan Hobat",
+        "slug": "coi-danh-trung-tron-bot-dai-loan-hobat",
+        "modelCode": "HB-30L-MIX",
+        "summary": "Cối đánh trứng và nhào bột công nghiệp bền bỉ của Hobat, đa tốc độ đánh kem, đánh trứng bông mịn.",
+        "description": "Cối đánh trứng và nhào bột công nghiệp bền bỉ của Hobat, đa tốc độ đánh kem, đánh trứng bông mịn.",
+        "brandId": "19d55fd9-dc72-4deb-b91b-525bc708594a",
+        "categoryId": "59619327-f4cb-4f20-b8b9-38f071fb74ed",
+        "isQuoteOnly": false,
+        "condition": "REFURBISHED_FULL",
+        "availability": "AVAILABLE",
+        "stock": 1,
+        "soldCount": 0,
+        "status": "available",
+        "originalPrice": "24500000",
+        "refurbishDetails": "Đã thay mới toàn bộ vòng bi bạc đạn SKF Thụy Điển, thay mới cặp dây curoa Bando Japan, căn chỉnh đồng trục motor, vệ sinh đánh bóng cối Inox SUS304.",
+        "testVideoUrl": null,
+        "inspectionChecklist": null,
+        "basePrice": "16000000",
+        "minPrice": "16000000",
+        "maxPrice": "16000000",
+        "currency": "VND",
+        "specSheetPdfUrl": null,
+        "manualPdfUrl": null,
+        "imageUrl": "/uploads/products/coi-danh-trung-hobat.webp",
+        "thumbnail": "/uploads/products/coi-danh-trung-hobat.webp",
+        "images": [
+          "/uploads/products/coi-danh-trung-hobat.webp"
+        ],
+        "videoUrl": null,
+        "warrantyMonths": 12,
+        "isFeatured": true,
+        "isActive": true,
+        "createdAt": "2026-10-30T13:57:15.626Z",
+        "updatedAt": "2026-11-01T12:31:06.719Z",
+        "variants": [
+          {
+            "id": "a82450d5-1f16-4b9a-8fce-70e3d7c27ca9",
+            "productId": "d0d28ec9-cc2c-4d03-92b6-59cf14ad652a",
+            "sku": "HB-30L-220V",
+            "name": "Cối đánh trứng / Trộn bột Đài Loan Hobat",
+            "price": "16000000",
+            "originalPrice": "24500000",
+            "stockQuantity": 1,
+            "isQuoteOnly": false,
+            "powerType": "SINGLE_PHASE_220V",
+            "powerKw": null,
+            "weightKg": null,
+            "dimensions": null,
+            "barcode": null,
+            "isActive": true,
+            "createdAt": "2026-10-30T13:57:15.629Z",
+            "updatedAt": "2026-11-01T12:31:06.720Z"
+          }
+        ]
+      },
+      {
+        "id": "82d6067a-be22-417c-96ed-604390c02f33",
+        "name": "Tủ bảo quản 2 cánh mở Ruyshing Đài Loan",
+        "slug": "tu-bao-quan-2-canh-mo-ruyshing-dai-loan",
+        "modelCode": "RS-2DR-STOR",
+        "summary": "Tủ 2 cánh mở bảo quản cốt bánh và nguyên liệu bánh, nhiệt độ giữ ẩm ổn định.",
+        "description": "Tủ 2 cánh mở bảo quản cốt bánh và nguyên liệu bánh, nhiệt độ giữ ẩm ổn định.",
+        "brandId": "e6a82278-fb04-4a8a-a6ee-4032cb37f8cc",
+        "categoryId": "04d49917-baf9-4b8d-9afc-ddd3cdc1bdb1",
+        "isQuoteOnly": false,
+        "condition": "REFURBISHED_FULL",
+        "availability": "AVAILABLE",
+        "stock": 1,
+        "soldCount": 0,
+        "status": "available",
+        "originalPrice": "38000000",
+        "refurbishDetails": "Đã thay mới toàn bộ vòng bi bạc đạn SKF Thụy Điển, thay mới cặp dây curoa Bando Japan, căn chỉnh đồng trục motor, vệ sinh đánh bóng cối Inox SUS304.",
+        "testVideoUrl": null,
+        "inspectionChecklist": null,
+        "basePrice": "24000000",
+        "minPrice": "24000000",
+        "maxPrice": "24000000",
+        "currency": "VND",
+        "specSheetPdfUrl": null,
+        "manualPdfUrl": null,
+        "imageUrl": "/uploads/products/tu-bao-quan-2-canh-mo-ruyshing.webp",
+        "thumbnail": "/uploads/products/tu-bao-quan-2-canh-mo-ruyshing.webp",
+        "images": [
+          "/uploads/products/tu-bao-quan-2-canh-mo-ruyshing.webp"
+        ],
+        "videoUrl": null,
+        "warrantyMonths": 12,
+        "isFeatured": true,
+        "isActive": true,
+        "createdAt": "2026-10-30T13:57:15.618Z",
+        "updatedAt": "2026-11-01T12:31:06.721Z",
+        "variants": [
+          {
+            "id": "b16d8014-25c0-4383-94b2-302559fced85",
+            "productId": "82d6067a-be22-417c-96ed-604390c02f33",
+            "sku": "RS-2DR-220V",
+            "name": "Tủ bảo quản 2 cánh mở Ruyshing Đài Loan",
+            "price": "24000000",
+            "originalPrice": "38000000",
+            "stockQuantity": 1,
+            "isQuoteOnly": false,
+            "powerType": "SINGLE_PHASE_220V",
+            "powerKw": null,
+            "weightKg": null,
+            "dimensions": null,
+            "barcode": null,
+            "isActive": true,
+            "createdAt": "2026-10-30T13:57:15.622Z",
+            "updatedAt": "2026-11-01T12:31:06.722Z"
+          }
+        ]
+      },
+      {
+        "id": "6b27c15b-8eba-4283-8316-9cc86041963f",
+        "name": "Tủ mát bảo quản 2 cánh lùa Ruyshing Đài Loan",
+        "slug": "tu-mat-bao-quan-2-canh-lua-ruyshing-dai-loan",
+        "modelCode": "RS-2SL-COOL",
+        "summary": "Tủ mát công nghiệp 2 cánh lùa tiện lợi, tối ưu diện tích thao tác trong quầy, dàn lạnh đồng siêu bền.",
+        "description": "Tủ mát công nghiệp 2 cánh lùa tiện lợi, tối ưu diện tích thao tác trong quầy, dàn lạnh đồng siêu bền.",
+        "brandId": "e6a82278-fb04-4a8a-a6ee-4032cb37f8cc",
+        "categoryId": "04d49917-baf9-4b8d-9afc-ddd3cdc1bdb1",
+        "isQuoteOnly": false,
+        "condition": "LIKE_NEW_99",
+        "availability": "AVAILABLE",
+        "stock": 1,
+        "soldCount": 0,
+        "status": "available",
+        "originalPrice": "58000000",
+        "refurbishDetails": "Đã thay mới toàn bộ vòng bi bạc đạn SKF Thụy Điển, thay mới cặp dây curoa Bando Japan, căn chỉnh đồng trục motor, vệ sinh đánh bóng cối Inox SUS304.",
+        "testVideoUrl": null,
+        "inspectionChecklist": null,
+        "basePrice": "38000000",
+        "minPrice": "38000000",
+        "maxPrice": "38000000",
+        "currency": "VND",
+        "specSheetPdfUrl": null,
+        "manualPdfUrl": null,
+        "imageUrl": "/uploads/products/tu-mat-2-canh-lua-ruyshing.webp",
+        "thumbnail": "/uploads/products/tu-mat-2-canh-lua-ruyshing.webp",
+        "images": [
+          "/uploads/products/tu-mat-2-canh-lua-ruyshing.webp"
+        ],
+        "videoUrl": null,
+        "warrantyMonths": 12,
+        "isFeatured": true,
+        "isActive": true,
+        "createdAt": "2026-10-30T13:57:15.610Z",
+        "updatedAt": "2026-11-01T12:31:06.723Z",
+        "variants": [
+          {
+            "id": "b506043f-254d-4ab9-9d38-8ae764f8e3bc",
+            "productId": "6b27c15b-8eba-4283-8316-9cc86041963f",
+            "sku": "RS-2SL-220V",
+            "name": "Tủ mát bảo quản 2 cánh lùa Ruyshing Đài Loan",
+            "price": "38000000",
+            "originalPrice": "58000000",
+            "stockQuantity": 1,
+            "isQuoteOnly": false,
+            "powerType": "SINGLE_PHASE_220V",
+            "powerKw": null,
+            "weightKg": null,
+            "dimensions": null,
+            "barcode": null,
+            "isActive": true,
+            "createdAt": "2026-10-30T13:57:15.615Z",
+            "updatedAt": "2026-11-01T12:31:06.724Z"
+          }
+        ]
+      },
+      {
+        "id": "5b26b222-cc5a-4846-9777-eea5afcb1949",
+        "name": "Tủ trưng bày bánh kem 1m8 5 tầng Ruyshing Đài Loan",
+        "slug": "tu-trung-bay-banh-kem-1m8-5-tang-ruyshing-dai-loan",
+        "modelCode": "RS-180-5T",
+        "summary": "Còn 3 con: 2 màu đen, 1 màu kem",
+        "description": "Dòng tủ lớn 1m8 cao cấp 5 tầng kính đứng, dung tích rộng rãi, sấy kính 4 mặt, phù hợp tiệm bánh quy mô lớn. Còn 3 con: 2 màu đen, 1 màu kem.",
+        "brandId": "e6a82278-fb04-4a8a-a6ee-4032cb37f8cc",
+        "categoryId": "04d49917-baf9-4b8d-9afc-ddd3cdc1bdb1",
+        "isQuoteOnly": false,
+        "condition": "REFURBISHED_FULL",
+        "availability": "AVAILABLE",
+        "stock": 1,
+        "soldCount": 0,
+        "status": "available",
+        "originalPrice": "118000000",
+        "refurbishDetails": "Đã thay mới toàn bộ vòng bi bạc đạn SKF Thụy Điển, thay mới cặp dây curoa Bando Japan, căn chỉnh đồng trục motor, vệ sinh đánh bóng cối Inox SUS304.",
+        "testVideoUrl": null,
+        "inspectionChecklist": null,
+        "basePrice": "55000000",
+        "minPrice": "55000000",
+        "maxPrice": "55000000",
+        "currency": "VND",
+        "specSheetPdfUrl": null,
+        "manualPdfUrl": null,
+        "imageUrl": "/uploads/products/tu-banh-kem-1m8-ruyshing.webp",
+        "thumbnail": "/uploads/products/tu-banh-kem-1m8-ruyshing.webp",
+        "images": [
+          "/uploads/products/tu-banh-kem-1m8-ruyshing.webp"
+        ],
+        "videoUrl": null,
+        "warrantyMonths": 12,
+        "isFeatured": true,
+        "isActive": true,
+        "createdAt": "2026-10-30T13:57:15.601Z",
+        "updatedAt": "2026-11-01T12:31:06.724Z",
+        "variants": [
+          {
+            "id": "939c65d4-8e8b-4fe1-8ba9-ecdd3acb854c",
+            "productId": "5b26b222-cc5a-4846-9777-eea5afcb1949",
+            "sku": "RS-180-5T-220V",
+            "name": "Tủ trưng bày bánh kem 1m8 5 tầng Ruyshing Đài Loan",
+            "price": "55000000",
+            "originalPrice": "118000000",
+            "stockQuantity": 3,
+            "isQuoteOnly": false,
+            "powerType": "SINGLE_PHASE_220V",
+            "powerKw": null,
+            "weightKg": null,
+            "dimensions": null,
+            "barcode": null,
+            "isActive": true,
+            "createdAt": "2026-10-30T13:57:15.605Z",
+            "updatedAt": "2026-11-01T12:31:06.725Z"
+          }
+        ]
+      },
+      {
+        "id": "668d99af-ba75-4acc-af99-affcae9563af",
+        "name": "Tủ trưng bày bánh kem 1m5 5 tầng Ruyshing Đài Loan",
+        "slug": "tu-trung-bay-banh-kem-1m5-5-tang-ruyshing-dai-loan",
+        "modelCode": "RS-150-5T",
+        "summary": "Tủ bánh kem kính đứng 1m5 gồm 5 tầng trưng bày, sấy kính chống đọng sương, block làm lạnh nhập khẩu Đài Loan chạy cực êm và bền bỉ.",
+        "description": "Tủ bánh kem kính đứng 1m5 gồm 5 tầng trưng bày, sấy kính chống đọng sương, block làm lạnh nhập khẩu Đài Loan chạy cực êm và bền bỉ.",
+        "brandId": "e6a82278-fb04-4a8a-a6ee-4032cb37f8cc",
+        "categoryId": "04d49917-baf9-4b8d-9afc-ddd3cdc1bdb1",
+        "isQuoteOnly": false,
+        "condition": "REFURBISHED_FULL",
+        "availability": "AVAILABLE",
+        "stock": 1,
+        "soldCount": 0,
+        "status": "available",
+        "originalPrice": "97000000",
+        "refurbishDetails": "Sấy kính 4 mặt chống đọng sương, block Embraco/Secop mới, nạp gas R404A",
+        "testVideoUrl": null,
+        "inspectionChecklist": null,
+        "basePrice": "45000000",
+        "minPrice": "45000000",
+        "maxPrice": "45000000",
+        "currency": "VND",
+        "specSheetPdfUrl": null,
+        "manualPdfUrl": null,
+        "imageUrl": "/uploads/products/1m5-5-tai-i-ng-a-ai-i-loan-ruyshing-1793622039222-1nqgk.webp",
+        "thumbnail": "/uploads/products/1m5-5-tai-i-ng-a-ai-i-loan-ruyshing-1793622039222-1nqgk.webp",
+        "images": [
+          "/uploads/products/1m5-5-tai-i-ng-a-ai-i-loan-ruyshing-1793622039222-1nqgk.webp"
+        ],
+        "videoUrl": null,
+        "warrantyMonths": 12,
+        "isFeatured": true,
+        "isActive": true,
+        "createdAt": "2026-10-30T13:57:15.584Z",
+        "updatedAt": "2026-11-02T12:20:40.801Z",
+        "variants": [
+          {
+            "id": "61e296be-47e0-4590-8570-e37f20d70c62",
+            "productId": "668d99af-ba75-4acc-af99-affcae9563af",
+            "sku": "RS-150-5T-220V",
+            "name": "Tủ trưng bày bánh kem 1m5 5 tầng Ruyshing Đài Loan",
+            "price": "45000000",
+            "originalPrice": "97000000",
+            "stockQuantity": 1,
+            "isQuoteOnly": false,
+            "powerType": "SINGLE_PHASE_220V",
+            "powerKw": null,
+            "weightKg": null,
+            "dimensions": null,
+            "barcode": null,
+            "isActive": true,
+            "createdAt": "2026-10-30T13:57:15.593Z",
+            "updatedAt": "2026-11-01T12:31:06.727Z"
+          }
+        ]
+      }
+    ],
+    "generalSettings": [
+      {
+        "id": "default",
+        "brandName": "CÔNG NGUYÊN",
+        "brandTagline": "Giải Pháp Máy Làm Bánh Công Nghiệp",
+        "brandLogoText": "CN",
+        "seoTitle": "Công Nguyên - Máy Làm Bánh Công Nghiệp & Thanh Lý TP.HCM",
+        "seoDescription": "Xưởng máy làm bánh Công Nguyên chuyên mua bán, tân trang và thanh lý lò nướng, máy trộn bột công nghiệp. Kiểm định kỹ thuật tận tâm, bảo hành uy tín tại TP.HCM.",
+        "adminMenuLabels": {
+          "orders": "Đơn hàng & Thu cọc máy",
+          "dashboard": "Tổng quan Dashboard",
+          "quotations": "Báo giá kỹ thuật B2B (RFQ)",
+          "settings_brand": "Cài đặt Thương hiệu",
+          "products_module": "Sản Phẩm",
+          "settings_gemini": "Cấu hình AI Gemini",
+          "settings_contact": "Thông tin Liên hệ",
+          "settings_content": "Nội dung Website",
+          "settings_payment": "Cài đặt Thanh toán",
+          "settings_homepage": "Hero & Trang chủ",
+          "settings_security": "Bảo mật & Đổi mật khẩu",
+          "settings_navigation": "Menu Header",
+          "settings_visibility": "Hiển thị giao diện"
+        },
+        "updatedAt": "2026-11-01T12:31:06.730Z"
+      }
+    ],
+    "siteSettings": [
+      {
+        "id": "default",
+        "brandName": "CÔNG NGUYÊN",
+        "brandTagline": "Giải Pháp Máy Làm Bánh Công Nghiệp",
+        "brandLogoText": "CN",
+        "seoTitle": "Công Nguyên - Máy Làm Bánh Công Nghiệp & Thanh Lý TP.HCM",
+        "seoDescription": "Xưởng máy làm bánh Công Nguyên chuyên mua bán, tân trang và thanh lý lò nướng, máy trộn bột công nghiệp. Kiểm định kỹ thuật tận tâm, bảo hành uy tín tại TP.HCM.",
+        "adminMenuLabels": {
+          "orders": "Đơn hàng & Thu cọc máy",
+          "dashboard": "Tổng quan Dashboard",
+          "quotations": "Báo giá kỹ thuật B2B (RFQ)",
+          "settings_brand": "Cài đặt Thương hiệu",
+          "products_module": "Sản Phẩm",
+          "settings_gemini": "Cấu hình AI Gemini",
+          "settings_contact": "Thông tin Liên hệ",
+          "settings_content": "Nội dung Website",
+          "settings_payment": "Cài đặt Thanh toán",
+          "settings_homepage": "Hero & Trang chủ",
+          "settings_security": "Bảo mật & Đổi mật khẩu",
+          "settings_navigation": "Menu Header",
+          "settings_visibility": "Hiển thị giao diện"
+        },
+        "updatedAt": "2026-11-01T12:31:06.731Z"
+      }
+    ],
+    "systemSettings": [
+      {
+        "id": "default",
+        "geminiApiKey": "6449e66205e76f88357bbf1e26515c26:473ce05195333f2dfd5d1cc3c1d5d950dfc0db5de6116df444a64262297d7ac5d6239df3f6aee92e3dfd26af6856508cc51eeecefaad695ad23a6082e349ed62",
+        "isAiEnabled": true,
+        "aiModelName": "gemini-2.5-flash",
+        "widgetRole": "Chuyên Viên Kỹ Thuật & Báo Giá Máy Bánh Công Nguyên",
+        "systemPrompt": "Bạn là Chuyên viên Kỹ thuật & Báo Giá Thiết Bị Bánh của CÔNG NGUYÊN (Website: congnguyen.com.vn) - đơn vị chuyên mua bán, tân trang, thanh lý máy móc và dây chuyền làm bánh công nghiệp thực tế. Nhiệm vụ của bạn là:\n- Tư vấn thông số kỹ thuật, công suất và ứng dụng thực tế của 3 nhóm danh mục thiết bị làm bánh chuẩn của Công Nguyên:\n  1. Tủ trưng bày bánh kem & Bảo quản (slug: tu-trung-bay-banh)\n  2. Lò nướng bánh công nghiệp (slug: lo-nuong-cong-nghiep)\n  3. Máy trộn bột & Đánh trứng (slug: may-tron-bot-danh-trung)\n- KHO HÀNG THỰC TẾ & KHÓA CHẶT DỮ LIỆU (STRICT PRODUCT GROUNDING):\n  + Bạn ghi nhớ chính xác và CHỈ gợi ý, báo giá những sản phẩm máy làm bánh thanh lý & tân trang CÒN HÀNG TRONG KHO (stock > 0).\n  + Danh sách máy đang có sẵn tại kho Công Nguyên:\n    1. \"Tủ trưng bày bánh kem 1m5 5 tầng Ruyshing Đài Loan\" | Danh mục: Tủ trưng bày bánh kem & Bảo quản (tu-trung-bay-banh) | Thương hiệu: Ruyshing (Đài Loan) | Giá gốc: 97.000.000 đ | Giá bán ưu đãi: 45.000.000 đ (Tiết kiệm 52.000.000 đ) | Tồn kho: 1 | Tình trạng: Tân trang nguyên bản\n    2. \"Tủ trưng bày bánh kem 1m8 5 tầng Ruyshing Đài Loan\" | Danh mục: Tủ trưng bày bánh kem & Bảo quản (tu-trung-bay-banh) | Thương hiệu: Ruyshing (Đài Loan) | Giá gốc: 118.000.000 đ | Giá bán ưu đãi: 55.000.000 đ (Tiết kiệm 63.000.000 đ) | Tồn kho: 3 (Còn 3 con: 2 màu đen, 1 màu kem) | Tình trạng: Máy tân trang như mới\n    3. \"Tủ mát bảo quản 2 cánh lùa Ruyshing Đài Loan\" | Danh mục: Tủ trưng bày bánh kem & Bảo quản (tu-trung-bay-banh) | Thương hiệu: Ruyshing (Đài Loan) | Giá gốc: 58.000.000 đ | Giá bán ưu đãi: 38.000.000 đ (Tiết kiệm 20.000.000 đ) | Tồn kho: 1 | Tình trạng: Nguyên bản hoạt động hoàn hảo\n    4. \"Tủ bảo quản 2 cánh mở Ruyshing Đài Loan\" | Danh mục: Tủ trưng bày bánh kem & Bảo quản (tu-trung-bay-banh) | Thương hiệu: Ruyshing (Đài Loan) | Giá gốc: 38.000.000 đ | Giá bán ưu đãi: 24.000.000 đ (Tiết kiệm 14.000.000 đ) | Tồn kho: 1 | Tình trạng: Tân trang đạt chuẩn kỹ thuật\n    5. \"Cối đánh trứng / Trộn bột Đài Loan Hobat\" | Danh mục: Máy trộn bột & Đánh trứng (may-tron-bot-danh-trung) | Thương hiệu: Hobat (Đài Loan) | Giá gốc: 24.500.000 đ | Giá bán ưu đãi: 16.000.000 đ (Tiết kiệm 8.500.000 đ) | Tồn kho: 1 | Tình trạng: Máy nguyên bản, motor dây đồng cực khỏe\n    6. \"Lò nướng điện 1 tầng 2 khay Hewwu Trung Quốc\" | Danh mục: Lò nướng bánh công nghiệp (lo-nuong-cong-nghiep) | Thương hiệu: Hewwu (Trung Quốc) | Giá gốc: 10.500.000 đ | Giá bán ưu đãi: 7.000.000 đ (Tiết kiệm 3.500.000 đ) | Tồn kho: 1 | Tình trạng: Thanh lý tiệm bánh, nhiệt lên đều\n    7. \"Lò nướng đối lưu 4 mâm Trung Quốc (Hàng mới 100%)\" | Danh mục: Lò nướng bánh công nghiệp (lo-nuong-cong-nghiep) | Thương hiệu: Trung Quốc | Giá gốc: 18.000.000 đ | Giá bán ưu đãi: 10.000.000 đ (Tiết kiệm 8.000.000 đ) | Tồn kho: 1 | Tình trạng: Hàng mới 100% xả thanh lý kho\n    8. \"Lò nướng đối lưu Southstar 4 mâm\" | Danh mục: Lò nướng bánh công nghiệp (lo-nuong-cong-nghiep) | Thương hiệu: Southstar | Giá gốc: 35.000.000 đ | Giá bán ưu đãi: 25.000.000 đ (Tiết kiệm 10.000.000 đ) | Tồn kho: 1 | Tình trạng: Độ mới 90%\n- QUY TẮC ĐỒNG BỘ TỒN KHO & XỬ LÝ MÁY HẾT HÀNG (REAL-TIME STOCK & OUT-OF-STOCK RULES):\n  + CHỈ gợi ý và báo giá các dòng máy có stock > 0.\n  + NẾU khách hỏi máy đã hết (stock === 0 hoặc out_of_stock), AI BẮT BUỘC thông báo lịch sự đúng nguyên văn: \"Dòng máy này hiện kho vừa chốt cọc cho khách, bạn có thể để lại số Zalo để kỹ thuật viên báo ngay khi đợt máy tân trang tiếp theo hoàn thiện nhé!\". Sau đó mời khách để lại số hoặc kết bạn Zalo 0976 619 044.\n- QUY TẮC SO SÁNH GIÁ & TIẾT KIỆM KHI BÁO GIÁ: Khi khách hỏi giá bất kỳ máy nào, bot KHÔNG CHỈ báo giá thanh lý mà BẮT BUỘC PHẢI NHẤN MẠNH SỐ TIỀN TIẾT KIỆM so với mua mới trên thị trường. Ví dụ: \"Tủ bánh kem 1m5 5 tầng Ruyshing giá mới trên thị trường khoảng 97 triệu, bên mình thanh lý máy tân trang chỉ 45 triệu, bạn tiết kiệm được tận 52 triệu cho tiệm của mình. Bạn có muốn kỹ thuật viên gửi video quay test máy qua Zalo 0976 619 044 không ạ?\". Đồng thời nêu 3 cam kết an tâm: Bảo hành kỹ thuật tận nơi, đổi trả 7 ngày nếu lỗi kỹ thuật, và hỗ trợ test máy trực tiếp tại xưởng 6/3 DN4, Đông Hưng Thuận.\n- THÔNG TIN LIÊN HỆ KỸ THUẬT & ZALO: Khi khách hàng yêu cầu gặp tư vấn viên, liên hệ kỹ thuật trực tiếp, hoặc xin số Zalo để gửi hình ảnh/video máy cũ cần bán thanh lý hay tân trang, bạn hãy cung cấp số Hotline & Zalo chính thức duy nhất là 0976 619 044 (link chat Zalo: https://zalo.me/0976619044) để được kỹ sư trưởng Công Nguyên thẩm định và hỗ trợ ngay.\n- Khi khách hàng hỏi mua hoặc tư vấn bất kỳ dòng máy nào, hãy nêu rõ tình trạng máy, xuất xứ, mức giá ưu đãi so với giá gốc, và kích thích khách hàng bấm nút \"Báo giá (RFQ)\" để nhận khảo sát điện 3 pha hoặc hỗ trợ vận chuyển lắp đặt tận nơi.\n- Tuyệt đối KHÔNG trả lời về sách, tài liệu học tập, giáo trình sinh viên, máy tính cũ. Luôn giữ văn phong kỹ thuật, am hiểu ngành bánh và tôn trọng khách hàng.",
+        "welcomeMessage": "Công Nguyên chào bạn",
+        "lastTestedAt": "2026-11-02T10:53:02.196Z",
+        "isValidKey": true,
+        "updatedAt": "2026-11-02T12:20:14.019Z"
+      }
+    ],
+    "paymentConfigs": [
+      {
+        "id": "default",
+        "bankId": "TPB",
+        "bankName": "TPBank (Ngân hàng Tiên Phong)",
+        "accountNumber": "0976619044",
+        "accountHolder": "CONG TY TNHH THIET BI BANH CONG NGUYEN",
+        "isBankEnabled": true,
+        "momoPhone": "0976619044",
+        "momoName": "CONG NGUYEN MACHINERY",
+        "momoQrUrl": "/uploads/payment/momo-qr.webp",
+        "isMomoEnabled": true,
+        "updatedAt": "2026-11-01T12:31:06.732Z"
+      }
+    ],
+    "homepageConfigs": [
+      {
+        "id": "default",
+        "badgeText": "CHUYÊN GIA THIẾT BỊ BÁNH TÂN TRANG",
+        "headingText": "Kho Máy Làm Bánh Thanh Lý & Tân Trang.",
+        "headingHighlight": "Chuẩn Kỹ Thuật Tại TP.HCM.",
+        "description": "Công Nguyên chuyên mua bán, tân trang và thanh lý thiết bị làm bánh công nghiệp.",
+        "primaryCtaText": "Khám Phá Kho Máy Ngay",
+        "primaryCtaLink": "/products",
+        "secondaryCtaText": "Liên Hệ Kỹ Thuật Trực Tiếp",
+        "secondaryCtaLink": "https://zalo.me/0976619044",
+        "stats": [
+          {
+            "label": "Máy Được Kỹ Sư Kiểm Tra Tải",
+            "value": "100%"
+          },
+          {
+            "label": "Tiết Kiệm So Với Đầu Tư Mới",
+            "value": "40-60%"
+          },
+          {
+            "label": "Bảo Hành Tận Nơi An Tâm",
+            "value": "12 Tháng"
+          }
+        ],
+        "homepageVisibility": {
+          "id": "default",
+          "showBadge": true,
+          "updatedAt": "2026-10-31T07:01:57.932Z",
+          "showHeroStats": true,
+          "showSecondaryCTA": true,
+          "showTestimonials": true,
+          "showFloatingContact": true,
+          "showHeroFeaturedCard": true,
+          "showWorkshopLocation": true,
+          "showHotProductsSection": true
+        },
+        "featuredImageUrl": "/uploads/products/lo-nuong-southstar.webp",
+        "featuredBadgeTag": "GIẢM 54%",
+        "featuredCategoryTag": "TỦ BÁNH KEM 5 TẦNG",
+        "featuredTitle": "Ruyshing 1m5 Kính Vuông",
+        "featuredStatusTag": "Sẵn sàng bàn giao",
+        "founderShow": true,
+        "founderName": "Vương Công Nguyên",
+        "founderTitle": "Kỹ sư / Đại diện Xưởng Máy Công Nguyên",
+        "founderCommitment": "Trực tiếp kiểm định từng máy • Đồng hành kỹ thuật 24/7",
+        "founderAvatarUrl": "/uploads/congnguyen-1793445417987-nqrgf.webp",
+        "founderLine": "Vương Công Nguyên – Trực tiếp kiểm định từng máy • Đồng hành kỹ thuật 24/7",
+        "updatedAt": "2026-11-01T12:31:06.728Z"
+      }
+    ],
+    "sectionVisibilities": [
+      {
+        "id": "default",
+        "showBadge": true,
+        "showHeroStats": true,
+        "showHeroFeaturedCard": true,
+        "showSecondaryCTA": true,
+        "showFloatingContact": true,
+        "showWorkshopLocation": false,
+        "showHotProductsSection": true,
+        "showTestimonials": true,
+        "updatedAt": "2026-11-01T12:31:06.729Z"
+      }
+    ],
+    "navigationSettings": [
+      {
+        "id": "default",
+        "items": [
+          {
+            "id": "menu_inventory",
+            "url": "/products",
+            "badge": null,
+            "label": "Sản phẩm",
+            "order": 1,
+            "isVisible": true
+          },
+          {
+            "id": "menu_buyback",
+            "url": "/thanh-ly",
+            "badge": "HOT",
+            "label": "Thu mua máy cũ",
+            "order": 2,
+            "isVisible": true
+          },
+          {
+            "id": "menu_tracking",
+            "url": "/tracking",
+            "badge": null,
+            "label": "Tra cứu tiến độ",
+            "order": 3,
+            "isVisible": true
+          },
+          {
+            "id": "menu_rfq",
+            "url": "/rfq",
+            "badge": "NEW",
+            "label": "Báo giá nhanh",
+            "order": 4,
+            "isVisible": false
+          }
+        ],
+        "updatedAt": "2026-11-01T03:12:05.861Z"
+      }
+    ],
+    "contactSettings": [
+      {
+        "id": "default",
+        "hotline": "0976619044",
+        "zaloPhone": "0976619044",
+        "facebookUrl": "https://www.facebook.com/cong.nguyen.668373",
+        "emailContact": "contact@congnguyen.com.vn",
+        "showroomAddress": "6/3 DN4, Đông Hưng Thuận, Hồ Chí Minh, Việt Nam",
+        "updatedAt": "2026-10-31T08:10:42.356Z"
+      }
+    ],
+    "siteContentSettings": [
+      {
+        "id": "default",
+        "bannerTitle": "Tư Vấn & Khảo Sát Dây Chuyền Bánh Tận Nơi",
+        "bannerSubtitle": "Đội ngũ kỹ thuật hỗ trợ tính toán công suất lò nướng, máy trộn và kiểm tra hạ tầng điện 3 pha cho xưởng của bạn.",
+        "bannerButtonText": "Gửi yêu cầu tư vấn kỹ thuật (RFQ)",
+        "bannerButtonLink": "/rfq",
+        "bannerHotline": "0976 619 044",
+        "footerCompanyName": "CÔNG NGUYÊN",
+        "footerSlogan": "THIẾT BỊ BÁNH THANH LÝ & TÂN TRANG",
+        "footerDescription": "Công Nguyên chuyên thu mua, tân trang và thanh lý thiết bị làm bánh công nghiệp chất lượng cao tại TP.HCM. Cam kết máy móc nguyên bản, kỹ thuật kiểm định chuẩn xưởng, bảo hành tận tâm và giá thành tối ưu cho chủ tiệm bánh.",
+        "footerCopyright": "© 2026 CÔNG NGUYÊN - congnguyen.com.vn. Thiết bị làm bánh thanh lý & tân trang hàng đầu TP.HCM.",
+        "featuredLinks": [
+          {
+            "url": "/products?categorySlug=tu-trung-bay-banh",
+            "label": "Tủ trưng bày bánh kem & Bảo quản"
+          },
+          {
+            "url": "/products?categorySlug=lo-nuong-cong-nghiep",
+            "label": "Lò nướng bánh công nghiệp"
+          },
+          {
+            "url": "/products?categorySlug=may-tron-bot-danh-trung",
+            "label": "Máy trộn bột & Cối đánh trứng"
+          },
+          {
+            "url": "/thu-mua-may-cu",
+            "label": "Dịch vụ Thu mua máy làm bánh cũ"
+          },
+          {
+            "url": "/tra-cuu-tien-do",
+            "label": "Tra cứu tiến độ kỹ thuật & Đơn hàng"
+          }
+        ],
+        "updatedAt": "2026-10-30T14:48:59.657Z"
+      }
+    ]
+  }
+}

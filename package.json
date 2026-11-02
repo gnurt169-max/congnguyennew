@@ -1,0 +1,34 @@
+{
+  "name": "industrial-bakery-ecommerce",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Nền tảng thương mại điện tử B2B/B2C thiết bị công nghiệp làm bánh - Next.js & NestJS",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npx prisma generate && npx prisma db push && npm run build --workspaces",
+    "dev:backend": "kill -9 $(lsof -t -i:4000) 2>/dev/null || true; npm run start:dev --workspace=apps/backend",
+    "dev:frontend": "npm run dev --workspace=apps/frontend",
+    "dev": "concurrently -n \"BACKEND,FRONTEND\" -c \"blue,green\" \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "build:frontend": "npm run build --workspace=apps/frontend",
+    "build:backend": "npm run build --workspace=apps/backend",
+    "prisma:generate": "npm run prisma:generate --workspace=apps/backend",
+    "prisma:migrate": "npm run prisma:migrate --workspace=apps/backend",
+    "prisma:studio": "npm run prisma:studio --workspace=apps/backend",
+    "prisma:seed": "npm run prisma:seed --workspace=apps/backend",
+    "db:export": "npx ts-node apps/backend/scripts/sync-export.ts",
+    "db:import": "npx ts-node apps/backend/scripts/sync-import.ts",
+    "data:dump": "npx ts-node apps/backend/scripts/dump-local-data.ts",
+    "data:export": "npx ts-node apps/backend/scripts/export-data.ts",
+    "data:seed": "npx ts-node apps/backend/prisma/seed.ts"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "typescript": "^5.6.3"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  }
+}

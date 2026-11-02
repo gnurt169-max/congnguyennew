@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 15, 23, 42;
+  --background-start-rgb: 248, 250, 252;
+  --background-end-rgb: 255, 255, 255;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+  min-height: 100vh;
+}
+
+@keyframes phone-ring {
+  0% { transform: rotate(0) scale(1); }
+  4% { transform: rotate(-16deg) scale(1.06); }
+  8% { transform: rotate(16deg) scale(1.06); }
+  12% { transform: rotate(-16deg) scale(1.06); }
+  16% { transform: rotate(16deg) scale(1.06); }
+  20% { transform: rotate(-8deg) scale(1.03); }
+  24% { transform: rotate(8deg) scale(1.03); }
+  28% { transform: rotate(0) scale(1); }
+  100% { transform: rotate(0) scale(1); }
+}
+
+.animate-phone-ring {
+  animation: phone-ring 3s infinite ease-in-out;
+}

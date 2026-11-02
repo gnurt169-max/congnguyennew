@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="50%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#d97706" />
+      <stop offset="100%" stop-color="#f59e0b" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)" />
+  <g transform="translate(400, 250)" text-anchor="middle">
+    <!-- Icon Oven/Mixer silhouette -->
+    <rect x="-70" y="-80" width="140" height="110" rx="16" fill="#334155" stroke="#f59e0b" stroke-width="3" />
+    <circle cx="0" cy="-25" r="32" fill="#1e293b" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4 2" />
+    <rect x="-45" y="45" width="90" height="12" rx="4" fill="#f59e0b" />
+    <circle cx="-35" cy="-25" r="4" fill="#fbbf24" />
+    <circle cx="35" cy="-25" r="4" fill="#fbbf24" />
+    <text y="100" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="800" fill="#f8fafc" letter-spacing="1">CÔNG NGUYÊN</text>
+    <text y="130" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600" fill="#94a3b8" letter-spacing="0.5">THIẾT BỊ LÀM BÁNH CÔNG NGHIỆP</text>
+  </g>
+</svg>
+

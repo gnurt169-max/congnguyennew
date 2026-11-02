@@ -1,0 +1,739 @@
+// Prisma schema cho hệ thống Thương mại điện tử Thiết bị làm bánh công nghiệp B2B/B2C
+// Database: PostgreSQL
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ==========================================
+// 1. ENUMS (Các kiểu dữ liệu liệt kê chuẩn hóa)
+// ==========================================
+
+enum PowerType {
+  SINGLE_PHASE_220V // Điện dân dụng 1 pha (220V / 50Hz)
+  THREE_PHASE_380V  // Điện sản xuất công nghiệp 3 pha (380V / 50Hz)
+  HYBRID_220_380V   // Máy hỗ trợ chuyển đổi hoặc có 2 phiên bản
+  UNPOWERED_MANUAL  // Thiết bị cơ / không dùng điện (xe đẩy khay, bàn thao tác)
+}
+
+enum RfqStatus {
+  PENDING              // Mới tiếp nhận yêu cầu từ website
+  CONTACTED            // Đã liên hệ sơ bộ với chủ xưởng làm bánh
+  TECHNICAL_CONSULTING // Kỹ sư kỹ thuật đang khảo sát mặt bằng, công suất điện
+  QUOTE_SENT           // Đã gửi bảng báo giá kỹ thuật chi tiết
+  NEGOTIATING          // Đang thương thảo điều khoản, chiết khấu
+  ACCEPTED             // Khách hàng đồng ý báo giá
+  REJECTED             // Khách hàng từ chối hoặc hủy yêu cầu
+  CONVERTED_TO_ORDER   // Đã chuyển đổi thành hợp đồng/đơn hàng chính thức
+}
+
+enum OrderType {
+  INSTANT_SALE     // Bán hàng online thanh toán ngay (dành cho linh kiện, máy nhỏ)
+  PROJECT_CONTRACT // Đơn hàng dự án/dây chuyền công nghiệp (qua tư vấn)
+  RFQ_CONVERSION   // Đơn hàng sinh ra từ yêu cầu báo giá RFQ
+}
+
+enum OrderStatus {
+  DRAFT                  // Bản nháp đơn hàng
+  PENDING_DEPOSIT        // Chờ đặt cọc đợt 1 (30% - 50%)
+  PROCESSING_MANUFACTURE // Đang chế tạo / nhập khẩu / lắp ráp thiết bị
+  READY_FOR_DELIVERY     // Máy móc đã kiểm định QC, sẵn sàng xuất xưởng
+  DELIVERED_TESTING      // Đã giao đến xưởng, kỹ thuật đang chạy thử & cân chỉnh
+  COMPLETED              // Nghiệm thu hoàn tất, bàn giao đưa vào vận hành
+  CANCELLED              // Đã hủy đơn
+}
+
+enum PaymentMilestoneType {
+  DEPOSIT_STAGE_1        // Đợt 1: Đặt cọc giữ máy / lệnh sản xuất (30% - 50%)
+  PRE_DELIVERY_STAGE_2   // Đợt 2: Thanh toán trước khi xuất kho / hàng cập cảng
+  HANDOVER_FINAL_STAGE_3 // Đợt 3: Thanh toán phần còn lại sau khi nghiệm thu máy
+}
+
+enum PaymentStatus {
+  PENDING   // Chờ chuyển khoản hoặc xác nhận
+  CONFIRMED // Kế toán đã đối soát thành công
+  FAILED    // Giao dịch lỗi / không nhận được tiền
+  REFUNDED  // Đã hoàn tiền cọc
+}
+
+enum PaymentMethod {
+  BANK_TRANSFER_DOMESTIC     // Chuyển khoản ngân hàng doanh nghiệp
+  CORPORATE_LETTER_OF_CREDIT // Thư tín dụng LC (cho các dây chuyền lớn)
+  CASH                       // Tiền mặt tại văn phòng / xưởng
+  ONLINE_VNPAY               // Cổng VNPay (thường dùng cho linh kiện bán lẻ)
+  ONLINE_MOMO                // Ví điện tử MoMo
+}
+
+// Độ mới / Tình trạng máy thanh lý & tân trang
+enum ProductCondition {
+  LIKE_NEW_99        // Like New 99% (Máy mẫu trưng bày / lướt ít giờ)
+  EXCELLENT_90_95    // Đẹp 90-95% (Nguyên bản, ngoại hình đẹp, máy chạy êm)
+  REFURBISHED_FULL   // Tân trang toàn diện (Đã thay bi SKF, thay dây curoa Bando, bảo dưỡng motor)
+  FAIR_80            // 80% (Máy hoạt động ổn định, ngoại hình có xước xát tự nhiên)
+}
+
+// Trạng thái sẵn sàng của máy thanh lý
+enum ProductAvailability {
+  AVAILABLE // Sẵn sàng bàn giao / test tại xưởng
+  RESERVED  // Đã có khách cọc giữ máy
+  SOLD      // Đã bán & xuất xưởng
+}
+
+// Trạng thái đơn gửi thanh lý máy cũ của chủ lò
+enum LiquidationStatus {
+  PENDING    // Mới gửi thông tin
+  APPRAISING // Đang thẩm định & định giá
+  CONTACTED  // Đã liên hệ báo giá thu mua
+  INSPECTED  // Đã cho kỹ thuật đến tận xưởng xem máy
+  COMPLETED  // Đã thanh toán & thu hồi máy
+  REJECTED   // Không phù hợp thu mua
+}
+
+enum StaffRole {
+  ADMIN
+  SALES_ENGINEER   // Kỹ sư kinh doanh tư vấn kỹ thuật
+  CHIEF_TECHNICIAN // Kỹ thuật viên trưởng lắp đặt
+  ACCOUNTANT       // Kế toán duyệt thanh toán đợt
+}
+
+// ==========================================
+// 2. NGƯỜI DÙNG & NHÂN SỰ NỘI BỘ
+// ==========================================
+
+model StaffUser {
+  id           String        @id @default(uuid())
+  email        String        @unique
+  passwordHash String        @map("password_hash")
+  fullName     String        @map("full_name")
+  phoneNumber  String?       @map("phone_number")
+  role         StaffRole     @default(SALES_ENGINEER)
+  isActive     Boolean       @default(true) @map("is_active")
+  createdAt    DateTime      @default(now()) @map("created_at")
+  updatedAt    DateTime      @updatedAt @map("updated_at")
+
+  assignedRfqs QuotationRequest[]
+  confirmedPayments OrderPayment[]
+
+  @@map("staff_users")
+}
+
+model Customer {
+  id              String             @id @default(uuid())
+  email           String?            @unique
+  phoneNumber     String             @unique @map("phone_number")
+  fullName        String             @map("full_name")
+  passwordHash    String?            @map("password_hash")
+  companyName     String?            @map("company_name")
+  taxCode         String?            @map("tax_code")
+  workshopAddress String?            @map("workshop_address")
+  province        String?
+  district        String?
+  isActive        Boolean            @default(true) @map("is_active")
+  createdAt       DateTime           @default(now()) @map("created_at")
+  updatedAt       DateTime           @updatedAt @map("updated_at")
+
+  quotations      QuotationRequest[]
+  orders          Order[]
+
+  @@index([phoneNumber])
+  @@map("customers")
+}
+
+// ==========================================
+// 3. DANH MỤC & THƯƠNG HIỆU THIẾT BỊ
+// ==========================================
+
+model Category {
+  id          String     @id @default(uuid())
+  name        String     // VD: Lò nướng bánh công nghiệp, Máy trộn bột xoắn ốc, Tủ ủ bột
+  slug        String     @unique
+  description String?    @db.Text
+  imageUrl    String?    @map("image_url")
+  parentId    String?    @map("parent_id")
+  sortOrder   Int        @default(0) @map("sort_order")
+  isActive    Boolean    @default(true) @map("is_active")
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @updatedAt @map("updated_at")
+
+  parent      Category?  @relation("CategoryHierarchy", fields: [parentId], references: [id], onDelete: SetNull)
+  children    Category[] @relation("CategoryHierarchy")
+  products    Product[]
+
+  @@index([slug])
+  @@index([isActive])
+  @@index([parentId, isActive])
+  @@map("categories")
+}
+
+model Brand {
+  id            String    @id @default(uuid())
+  name          String    // VD: Sinmag, Kolb, Bongard, Sottoriva, Chanmag
+  slug          String    @unique
+  logoUrl       String?   @map("logo_url")
+  originCountry String?   @map("origin_country") // Đức, Pháp, Ý, Đài Loan, Việt Nam
+  description   String?   @db.Text
+  website       String?
+  isActive      Boolean   @default(true) @map("is_active")
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+
+  products      Product[]
+
+  @@index([slug])
+  @@index([isActive])
+  @@map("brands")
+}
+
+// ==========================================
+// 4. THÔNG SỐ KỸ THUẬT & BỘ LỌC (EAV ATTRIBUTES)
+// ==========================================
+
+model Attribute {
+  id           String           @id @default(uuid())
+  name         String           // VD: Điện áp, Dung tích cối, Số khay nướng, Năng suất bột
+  code         String           @unique // VD: voltage, bowl_capacity, tray_count, productivity
+  unit         String?          // VD: V, Lít, Khay, kg/mẻ, kW
+  isFilterable Boolean          @default(true) @map("is_filterable")
+  sortOrder    Int              @default(0) @map("sort_order")
+  createdAt    DateTime         @default(now()) @map("created_at")
+
+  values       AttributeValue[]
+
+  @@map("attributes")
+}
+
+model AttributeValue {
+  id           String                   @id @default(uuid())
+  attributeId  String                   @map("attribute_id")
+  value        String                   // VD: 380V (3 pha), 60 Lít, 16 Khay
+  code         String                   // VD: 380v-3phase, 60l, 16-trays
+  sortOrder    Int                      @default(0) @map("sort_order")
+
+  attribute    Attribute                @relation(fields: [attributeId], references: [id], onDelete: Cascade)
+  variantLinks VariantAttributeValue[]
+
+  @@unique([attributeId, code])
+  @@index([attributeId])
+  @@map("attribute_values")
+}
+
+// ==========================================
+// 5. SẢN PHẨM & BIẾN THỂ (PRODUCTS & VARIANTS)
+// ==========================================
+
+model Product {
+  id               String            @id @default(uuid())
+  name             String            // VD: Máy trộn bột công nghiệp dạng xoắn Spiral Mixer 60L
+  slug             String            @unique
+  modelCode        String?           @map("model_code") // Mã dòng máy: VD: SM-60A
+  summary          String?           @db.Text
+  description      String            @db.Text // Mô tả chi tiết, nguyên lý hoạt động
+  brandId          String?           @map("brand_id")
+  categoryId       String            @map("category_id")
+
+  // Quy tắc Nút Đôi: Máy lớn/dây chuyền -> true (buộc RFQ), Phụ kiện -> false (cho vào giỏ hàng)
+  isQuoteOnly      Boolean           @default(false) @map("is_quote_only")
+
+  // --- ĐẶC THÙ MÁY THANH LÝ & TÂN TRANG (REFURBISHED) ---
+  condition            ProductCondition?     @default(REFURBISHED_FULL) // Độ mới
+  availability         ProductAvailability   @default(AVAILABLE)        // Sẵn sàng bàn giao / Đã cọc / Đã bán
+  stock                Int                   @default(1) @map("stock")  // Số lượng máy tồn kho thực tế
+  soldCount            Int                   @default(0) @map("sold_count") // Số lượng máy đã bán thành công
+  status               String                @default("available") @map("status") // 'available' | 'out_of_stock' | 'reserved'
+  originalPrice        Decimal?              @map("original_price") @db.Decimal(15, 2) // Giá máy đập hộp mới 100% ngoài thị trường để so sánh tiết kiệm
+  refurbishDetails     String?               @map("refurbish_details") @db.Text       // Chi tiết linh kiện đã đại tu (bi bạc SKF, phớt chịu nhiệt, dây curoa...)
+  testVideoUrl         String?               @map("test_video_url")                  // Video test máy chạy thực tế tại xưởng
+  inspectionChecklist  Json?                 @map("inspection_checklist")             // Bảng checklist kiểm định: Motor, biến tần, nhiệt độ, cối inox, cách điện
+
+  // Mức giá hiển thị tham chiếu (VNĐ)
+  basePrice        Decimal?          @map("base_price") @db.Decimal(15, 2)
+  minPrice         Decimal?          @map("min_price") @db.Decimal(15, 2)
+  maxPrice         Decimal?          @map("max_price") @db.Decimal(15, 2)
+  currency         String            @default("VND")
+
+  // Tài liệu kỹ thuật đi kèm máy
+  specSheetPdfUrl  String?           @map("spec_sheet_pdf_url")
+  manualPdfUrl     String?           @map("manual_pdf_url")
+
+  // Media
+  imageUrl         String?           @map("image_url")
+  thumbnail        String?
+  images           Json?             // Mảng danh sách ảnh góc máy, chi tiết cối, bảng điều khiển
+  videoUrl         String?           @map("video_url")
+
+  warrantyMonths   Int               @default(12) @map("warranty_months") // Thời gian bảo hành (tháng)
+  isFeatured       Boolean           @default(false) @map("is_featured")
+  isActive         Boolean           @default(true) @map("is_active")
+  createdAt        DateTime          @default(now()) @map("created_at")
+  updatedAt        DateTime          @updatedAt @map("updated_at")
+
+  brand            Brand?            @relation(fields: [brandId], references: [id], onDelete: SetNull)
+  category         Category          @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  variants         ProductVariant[]
+  quotationItems   QuotationItem[]
+  orderItems       OrderItem[]
+
+  @@index([slug])
+  @@index([categoryId])
+  @@index([brandId])
+  @@index([isQuoteOnly])
+  @@index([status])
+  @@index([isActive])
+  @@index([createdAt(sort: Desc)])
+  @@index([categoryId, status])
+  @@index([categoryId, isActive])
+  @@index([status, createdAt(sort: Desc)])
+  @@map("products")
+}
+
+model ProductVariant {
+  id              String                  @id @default(uuid())
+  productId       String                  @map("product_id")
+  sku             String                  @unique // Mã SKU duy nhất: VD: SM-60A-380V
+  name            String                  // VD: Bản điện 3 pha 380V - Cối 60L
+  price           Decimal?                @db.Decimal(15, 2)
+  originalPrice   Decimal?                @map("original_price") @db.Decimal(15, 2)
+  stockQuantity   Int                     @default(0) @map("stock_quantity")
+  isQuoteOnly     Boolean                 @default(false) @map("is_quote_only")
+
+  // Thông số kỹ thuật động lực học cốt lõi
+  powerType       PowerType               @default(THREE_PHASE_380V) @map("power_type")
+  powerKw         Decimal?                @map("power_kw") @db.Decimal(6, 2) // Công suất điện (kW)
+  weightKg        Decimal?                @map("weight_kg") @db.Decimal(8, 2) // Trọng lượng máy (kg)
+  dimensions      String?                 // Kích thước Dài x Rộng x Cao (mm)
+  barcode         String?
+
+  isActive        Boolean                 @default(true) @map("is_active")
+  createdAt       DateTime                @default(now()) @map("created_at")
+  updatedAt       DateTime                @updatedAt @map("updated_at")
+
+  product         Product                 @relation(fields: [productId], references: [id], onDelete: Cascade)
+  attributeValues VariantAttributeValue[]
+  quotationItems  QuotationItem[]
+  orderItems      OrderItem[]
+
+  @@index([productId])
+  @@index([sku])
+  @@index([powerType])
+  @@index([productId, isActive])
+  @@map("product_variants")
+}
+
+model VariantAttributeValue {
+  variantId        String         @map("variant_id")
+  attributeValueId String         @map("attribute_value_id")
+
+  variant          ProductVariant @relation(fields: [variantId], references: [id], onDelete: Cascade)
+  attributeValue   AttributeValue @relation(fields: [attributeValueId], references: [id], onDelete: Cascade)
+
+  @@id([variantId, attributeValueId])
+  @@map("variant_attribute_values")
+}
+
+// ==========================================
+// 6. YÊU CẦU BÁO GIÁ KỸ THUẬT (B2B RFQ)
+// ==========================================
+
+model QuotationRequest {
+  id                       String          @id @default(uuid())
+  code                     String          @unique // Mã RFQ: VD: RFQ-202610-0001
+  customerId               String?         @map("customer_id")
+  customerName             String          @map("customer_name")
+  customerPhone            String          @map("customer_phone")
+  customerEmail            String?         @map("customer_email")
+
+  // Thông tin cơ sở làm bánh để tư vấn kỹ thuật
+  companyName              String?         @map("company_name")      // Tên xưởng / tiệm bánh
+  workshopAddress          String?         @map("workshop_address")  // Địa chỉ khảo sát lắp đặt
+  province                 String?
+  district                 String?
+  targetPowerSupply        PowerType       @default(THREE_PHASE_380V) @map("target_power_supply")
+  dailyCapacityRequirement String?         @map("daily_capacity_requirement") @db.Text // VD: 1.500 ổ bánh mì baguettes/ngày
+  expectedDeliveryDate     DateTime?       @map("expected_delivery_date")
+
+  status                   RfqStatus       @default(PENDING)
+  customerNotes            String?         @map("customer_notes") @db.Text
+  internalTechnicalNotes   String?         @map("internal_technical_notes") @db.Text
+  estimatedTotal           Decimal?        @map("estimated_total") @db.Decimal(15, 2)
+
+  assignedStaffId          String?         @map("assigned_staff_id")
+  createdAt                DateTime        @default(now()) @map("created_at")
+  updatedAt                DateTime        @updatedAt @map("updated_at")
+
+  customer                 Customer?       @relation(fields: [customerId], references: [id], onDelete: SetNull)
+  assignedStaff            StaffUser?      @relation(fields: [assignedStaffId], references: [id], onDelete: SetNull)
+  items                    QuotationItem[]
+  orders                   Order[]
+
+  @@index([code])
+  @@index([customerPhone])
+  @@index([status])
+  @@index([createdAt(sort: Desc)])
+  @@index([status, createdAt(sort: Desc)])
+  @@map("quotation_requests")
+}
+
+model QuotationItem {
+  id                 String            @id @default(uuid())
+  quotationRequestId String            @map("quotation_request_id")
+  productId          String            @map("product_id")
+  variantId          String?           @map("variant_id")
+  requestedQuantity  Int               @default(1) @map("requested_quantity")
+  targetUnitPrice    Decimal?          @map("target_unit_price") @db.Decimal(15, 2)
+  offeredUnitPrice   Decimal?          @map("offered_unit_price") @db.Decimal(15, 2)
+  technicalNotes     String?           @map("technical_notes") @db.Text
+
+  quotationRequest   QuotationRequest  @relation(fields: [quotationRequestId], references: [id], onDelete: Cascade)
+  product            Product           @relation(fields: [productId], references: [id], onDelete: Restrict)
+  variant            ProductVariant?   @relation(fields: [variantId], references: [id], onDelete: SetNull)
+
+  @@map("quotation_items")
+}
+
+// ==========================================
+// 7. ĐƠN HÀNG & SAO LƯU DỮ LIỆU (ORDERS & SNAPSHOT)
+// ==========================================
+
+model Order {
+  id                    String          @id @default(uuid())
+  orderCode             String          @unique // VD: ORD-202610-0001
+  customerId            String?         @map("customer_id")
+  quotationRequestId    String?         @map("quotation_request_id")
+
+  customerName          String          @map("customer_name")
+  customerPhone         String          @map("customer_phone")
+  customerEmail         String?         @map("customer_email")
+  companyName           String?         @map("company_name")
+  taxCode               String?         @map("tax_code")
+  shippingAddress       String          @map("shipping_address")
+  billingAddress        String?         @map("billing_address")
+
+  orderType             OrderType       @default(INSTANT_SALE) @map("order_type")
+  status                OrderStatus     @default(PENDING_DEPOSIT)
+
+  // Giá trị tài chính
+  totalAmount           Decimal         @map("total_amount") @db.Decimal(15, 2)
+  depositRequiredPercent Decimal        @default(30.00) @map("deposit_required_percent") @db.Decimal(5, 2) // % cọc (30% - 50%)
+  depositAmount         Decimal         @map("deposit_amount") @db.Decimal(15, 2)
+  paidAmount            Decimal         @default(0.00) @map("paid_amount") @db.Decimal(15, 2)
+  remainingAmount       Decimal         @map("remaining_amount") @db.Decimal(15, 2)
+
+  isDepositSettled      Boolean         @default(false) @map("is_deposit_settled")
+  isFullyPaid           Boolean         @default(false) @map("is_fully_paid")
+
+  notes                 String?         @db.Text
+  createdAt             DateTime        @default(now()) @map("created_at")
+  updatedAt             DateTime        @updatedAt @map("updated_at")
+
+  customer              Customer?       @relation(fields: [customerId], references: [id], onDelete: SetNull)
+  quotationRequest      QuotationRequest? @relation(fields: [quotationRequestId], references: [id], onDelete: SetNull)
+  items                 OrderItem[]
+  payments              OrderPayment[]
+
+  @@index([orderCode])
+  @@index([customerPhone])
+  @@index([status])
+  @@index([createdAt(sort: Desc)])
+  @@index([status, createdAt(sort: Desc)])
+  @@map("orders")
+}
+
+model OrderItem {
+  id                    String          @id @default(uuid())
+  orderId               String          @map("order_id")
+  productId             String?         @map("product_id")
+  variantId             String?         @map("variant_id")
+
+  // --- BẮT BUỘC SNAPSHOT TẠI THỜI ĐIỂM TẠO ĐƠN ---
+  // Tuyệt đối không trỏ quan hệ lấy giá hiện hành để tránh sai lệch lịch sử kế toán/pháp lý
+  productName           String          @map("product_name")
+  variantName           String?         @map("variant_name")
+  sku                   String          // Mã SKU tại thời điểm chốt đơn
+  unitPrice             Decimal         @map("unit_price") @db.Decimal(15, 2)
+  quantity              Int
+  totalPrice            Decimal         @map("total_price") @db.Decimal(15, 2)
+
+  // Lưu trữ nguyên vẹn thông số kỹ thuật (điện áp, dung tích, số khay, kích thước)
+  specsSnapshot         Json            @map("specs_snapshot")
+  warrantyTermsSnapshot String?         @map("warranty_terms_snapshot")
+
+  order                 Order           @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product               Product?        @relation(fields: [productId], references: [id], onDelete: SetNull)
+  variant               ProductVariant? @relation(fields: [variantId], references: [id], onDelete: SetNull)
+
+  @@index([orderId])
+  @@map("order_items")
+}
+
+// ==========================================
+// 8. THANH TOÁN THEO ĐỢT (MILESTONE PAYMENTS)
+// ==========================================
+
+model OrderPayment {
+  id             String               @id @default(uuid())
+  paymentCode    String               @unique @map("payment_code") // VD: PAY-202610-0001
+  orderId        String               @map("order_id")
+  milestoneType  PaymentMilestoneType @map("milestone_type")
+  amount         Decimal              @db.Decimal(15, 2)
+  paymentMethod  PaymentMethod        @default(BANK_TRANSFER_DOMESTIC) @map("payment_method")
+  status         PaymentStatus        @default(PENDING)
+
+  transactionRef String?              @map("transaction_ref") // Mã giao dịch ngân hàng / hóa đơn ủy nhiệm chi
+  proofImageUrl  String?              @map("proof_image_url") // Ảnh chụp ủy nhiệm chi / sao kê
+
+  confirmedAt    DateTime?            @map("confirmed_at")
+  confirmedById  String?              @map("confirmed_by_id")
+  notes          String?              @db.Text
+  createdAt      DateTime             @default(now()) @map("created_at")
+  updatedAt      DateTime             @updatedAt @map("updated_at")
+
+  order          Order                @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  confirmedBy    StaffUser?           @relation(fields: [confirmedById], references: [id], onDelete: SetNull)
+
+  @@index([paymentCode])
+  @@index([orderId])
+  @@index([status])
+  @@map("order_payments")
+}
+
+// ==========================================
+// 9. TIẾP NHẬN THU MUA & THANH LÝ MÁY CŨ
+// ==========================================
+
+model LiquidationSubmission {
+  id              String             @id @default(uuid())
+  code            String             @unique // Mã đơn thu mua: VD: TL-YYYYMM-XXXX
+  contactName     String             @map("contact_name")
+  phoneNumber     String             @map("phone_number")
+  email           String?
+  bakeryName      String?            @map("bakery_name")     // Tên tiệm bánh / xưởng
+  workshopAddress String             @map("workshop_address")// Địa chỉ xưởng để kỹ thuật đến test máy
+  province        String?
+  district        String?
+
+  // Thông tin máy cần thanh lý
+  machineType     String             @map("machine_type")    // Lò nướng xoay, máy trộn bột xoắn, tủ ủ...
+  brandModel      String?            @map("brand_model")     // Thương hiệu & model (Sinmag, Kolb, Chanmag...)
+  usageYears      Int?               @map("usage_years")     // Số năm đã sử dụng
+  powerSupply     PowerType          @default(THREE_PHASE_380V) @map("power_supply")
+  currentStatus   String             @db.Text @map("current_status") // Tình trạng hiện tại (vẫn đang chạy tốt, hỏng bạc đạn, kêu to...)
+  expectedPrice   Decimal?           @map("expected_price") @db.Decimal(15, 2) // Giá mong muốn (VNĐ)
+  images          Json?              // Danh sách URL ảnh thực tế máy (toàn thân, tem thông số, cối/khoang nướng)
+  videoUrl        String?            @map("video_url")       // Link video máy đang chạy thử
+
+  status          LiquidationStatus  @default(PENDING)
+  appraisedPrice  Decimal?           @map("appraised_price") @db.Decimal(15, 2) // Giá kỹ thuật xưởng định giá thu mua
+  technicianNotes String?            @map("technician_notes") @db.Text          // Nhận xét của kỹ thuật viên khảo sát
+  createdAt       DateTime           @default(now()) @map("created_at")
+  updatedAt       DateTime           @updatedAt @map("updated_at")
+
+  @@index([code])
+  @@index([phoneNumber])
+  @@index([status])
+  @@index([createdAt(sort: Desc)])
+  @@map("liquidation_submissions")
+}
+
+// ==========================================
+// 10. CẤU HÌNH THANH TOÁN (VIETQR & MOMO)
+// ==========================================
+
+model PaymentConfig {
+  id            String   @id @default("default")
+  // Cấu hình Ngân hàng (VietQR - Cố định duy nhất TPBank)
+  bankId        String?  @default("TPB") // Mã ngân hàng cố định: TPB
+  bankName      String?  @default("TPBank (Ngân hàng Tiên Phong)") // Tên ngân hàng hiển thị
+  accountNumber String?  @default("1029384756") // Số tài khoản nhận tiền
+  accountHolder String?  @default("CONG TY TNHH THIET BI BANH CONG NGUYEN") // Tên chủ tài khoản
+  isBankEnabled Boolean  @default(true)
+
+  // Cấu hình Ví MoMo (Chuyển sang Upload ảnh QR tĩnh)
+  momoPhone     String?  // Số điện thoại nhận MoMo (deprecated)
+  momoName      String?  @default("CONG NGUYEN MACHINERY")
+  momoQrUrl     String?  @default("/uploads/payment/momo-qr.webp") @map("momo_qr_url") // Đường dẫn ảnh mã QR MoMo tĩnh đã upload (.webp)
+  isMomoEnabled Boolean  @default(true)
+
+  updatedAt     DateTime @updatedAt
+
+  @@map("payment_configs")
+}
+
+// ==========================================
+// 11. CẤU HÌNH THÔNG TIN LIÊN HỆ
+// ==========================================
+
+model ContactSettings {
+  id              String   @id @default("default")
+  hotline         String   @default("0976 619 044")
+  zaloPhone       String   @default("0976619044")
+  facebookUrl     String   @default("https://facebook.com/congnguyenmachinery")
+  emailContact    String   @default("hotro@congnguyen.com.vn")
+  showroomAddress String?  @default("Hồ Chí Minh, Việt Nam")
+  updatedAt       DateTime @updatedAt
+
+  @@map("contact_settings")
+}
+
+// ==========================================
+// 12. CẤU HÌNH NỘI DUNG WEBSITE ĐỘNG
+// ==========================================
+
+model SiteContentSettings {
+  id                  String   @id @default("default")
+
+  // 1. Khối Banner Tư Vấn Kỹ Thuật (CTA Banner)
+  bannerTitle         String   @default("Tư Vấn & Khảo Sát Dây Chuyền Bánh Tận Nơi")
+  bannerSubtitle      String   @default("Đội ngũ kỹ thuật hỗ trợ tính toán công suất lò nướng, máy trộn và kiểm tra hạ tầng điện 3 pha cho xưởng của bạn.")
+  bannerButtonText    String   @default("Gửi yêu cầu tư vấn kỹ thuật (RFQ)")
+  bannerButtonLink    String   @default("/rfq")
+  bannerHotline       String   @default("0976 619 044")
+
+  footerCompanyName   String   @default("CÔNG NGUYÊN")
+  footerSlogan        String   @default("THIẾT BỊ BÁNH THANH LÝ & TÂN TRANG")
+  footerDescription   String   @default("Công Nguyên chuyên thu mua, tân trang và thanh lý thiết bị làm bánh công nghiệp chất lượng cao tại TP.HCM. Cam kết máy móc nguyên bản, kỹ thuật kiểm định chuẩn xưởng, bảo hành tận tâm và giá thành tối ưu cho chủ tiệm bánh.")
+  footerCopyright     String   @default("© 2026 CÔNG NGUYÊN - congnguyen.com.vn. Thiết bị làm bánh thanh lý & tân trang hàng đầu TP.HCM.")
+
+  // 3. Danh sách máy chủ lực (Dạng JSON mảng các mục)
+  featuredLinks       Json?    // Ví dụ: [{"label": "Lò nướng xoay Rotary 16-32 khay", "url": "/products?cat=lo-nuong"}, ...]
+
+  updatedAt           DateTime @updatedAt
+
+  @@map("site_content_settings")
+}
+
+// ==========================================
+// 13. CẤU HÌNH HỆ THỐNG & AI GEMINI
+// ==========================================
+
+model SystemSettings {
+  id              String    @id @default("default")
+  geminiApiKey    String?   @map("gemini_api_key") // Lưu API Key (được mã hóa bảo mật)
+  isAiEnabled     Boolean   @default(true) @map("is_ai_enabled")
+  aiModelName     String    @default("gemini-2.5-flash") @map("ai_model_name")
+  widgetRole      String?   @default("Chuyên Viên Kỹ Thuật & Báo Giá Máy Bánh Công Nguyên") @map("widget_role")
+  systemPrompt    String?   @map("system_prompt") @db.Text
+  welcomeMessage  String?   @default("Chào bạn! Công Nguyên chuyên cung cấp & thanh lý máy móc, thiết bị làm bánh công nghiệp (lò nướng, máy trộn bột, máy cán, máy chia bột...). Bạn đang cần tư vấn dòng máy nào hoặc tìm đồ tân trang cho tiệm bánh của mình?") @map("welcome_message")
+  lastTestedAt    DateTime? @map("last_tested_at")
+  isValidKey      Boolean?  @map("is_valid_key")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+
+  @@map("system_settings")
+}
+
+// ==========================================
+// 14. CẤU HÌNH TRANG CHỦ (HERO & HOMEPAGE)
+// ==========================================
+
+model HomepageConfig {
+  id                  String   @id @default("default")
+
+  // Badge nhỏ phía trên
+  badgeText           String   @default("CHUYÊN GIA THIẾT BỊ BÁNH TÂN TRANG") @map("badge_text")
+
+  // Tiêu đề chính (Heading)
+  headingText         String   @default("Kho Máy Làm Bánh Thanh Lý & Tân Trang.") @map("heading_text")
+  headingHighlight    String   @default("Chuẩn Kỹ Thuật Tại TP.HCM.") @map("heading_highlight")
+
+  // Đoạn mô tả (Description)
+  description         String   @default("Công Nguyên chuyên mua bán, tân trang và thanh lý thiết bị làm bánh công nghiệp giá tốt tại TP.HCM: Lò nướng bánh, tủ trưng bày bánh kem, máy trộn bột... Bảo hành kỹ thuật tận nơi, hỗ trợ test máy trực tiếp tại xưởng.") @db.Text
+
+  // Nút bấm CTA 1 & CTA 2
+  primaryCtaText      String   @default("Xem Kho Máy Tân Trang") @map("primary_cta_text")
+  primaryCtaLink      String   @default("/products") @map("primary_cta_link")
+  secondaryCtaText    String   @default("Báo Giá Thu Mua Máy Cũ") @map("secondary_cta_text")
+  secondaryCtaLink    String   @default("/thanh-ly") @map("secondary_cta_link")
+
+  // 3 Thông số nổi bật (Stats / Highlights dạng JSON)
+  stats               Json?
+
+  // Quản lý hiển thị vùng Hero / Trang chủ (dạng JSON dự phòng)
+  homepageVisibility  Json?    @map("homepage_visibility")
+
+  // Card ảnh tiêu biểu (Hero Featured Card)
+  featuredImageUrl    String   @default("") @map("featured_image_url")
+  featuredBadgeTag    String   @default("Đã kiểm định kỹ thuật • Độ mới 90-95%") @map("featured_badge_tag")
+  featuredCategoryTag String   @default("TIÊU BIỂU XUẤT XƯỞNG") @map("featured_category_tag")
+  featuredTitle       String   @default("Lò Nướng Đối Lưu & Tủ Bánh Kem Ruyshing") @map("featured_title")
+  featuredStatusTag   String   @default("Sẵn sàng chạy thử") @map("featured_status_tag")
+
+  // Khung Chủ Doanh Nghiệp / Kỹ Sư Sáng Lập (Founder / Owner Frame)
+  founderShow         Boolean  @default(true) @map("founder_show")
+  founderName         String   @default("Lê Nguyễn Minh Trung") @map("founder_name")
+  founderTitle        String   @default("Kỹ sư / Đại diện Xưởng Máy Công Nguyên") @map("founder_title")
+  founderCommitment   String   @default("Trực tiếp kiểm định từng máy • Đồng hành kỹ thuật 24/7") @map("founder_commitment")
+  founderAvatarUrl    String?  @map("founder_avatar_url")
+  founderLine         String?  @default("Lê Nguyễn Minh Trung – Trực tiếp kiểm định kỹ thuật & bàn giao máy") @map("founder_line")
+
+  updatedAt           DateTime @updatedAt @map("updated_at")
+
+  @@map("homepage_configs")
+}
+
+// ==========================================
+// 14. CẤU HÌNH THƯƠNG HIỆU & CHUNG (BRAND IDENTITY)
+// ==========================================
+
+model GeneralSettings {
+  id              String   @id @default("default")
+  brandName       String   @default("CÔNG NGUYÊN") @map("brand_name")
+  brandTagline    String   @default("Giải Pháp Máy Làm Bánh Công Nghiệp") @map("brand_tagline")
+  brandLogoText   String   @default("CN") @map("brand_logo_text")
+  seoTitle        String?  @default("Công Nguyên - Máy Làm Bánh Công Nghiệp & Thanh Lý TP.HCM") @map("seo_title")
+  seoDescription  String?  @default("Xưởng máy làm bánh Công Nguyên chuyên mua bán, tân trang và thanh lý lò nướng, máy trộn bột công nghiệp. Kiểm định kỹ thuật tận tâm, bảo hành uy tín tại TP.HCM.") @map("seo_description")
+  adminMenuLabels Json?    @map("admin_menu_labels")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  @@map("general_settings")
+}
+
+model SiteSetting {
+  id              String   @id @default("default")
+  brandName       String   @default("CÔNG NGUYÊN") @map("brand_name")
+  brandTagline    String   @default("Giải Pháp Máy Làm Bánh Công Nghiệp") @map("brand_tagline")
+  brandLogoText   String   @default("CN") @map("brand_logo_text")
+  seoTitle        String?  @default("Công Nguyên - Máy Làm Bánh Công Nghiệp & Thanh Lý TP.HCM") @map("seo_title")
+  seoDescription  String?  @default("Xưởng máy làm bánh Công Nguyên chuyên mua bán, tân trang và thanh lý lò nướng, máy trộn bột công nghiệp. Kiểm định kỹ thuật tận tâm, bảo hành uy tín tại TP.HCM.") @map("seo_description")
+  adminMenuLabels Json?    @map("admin_menu_labels")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  @@map("site_settings")
+}
+
+// ==========================================
+// 15. CẤU HÌNH HIỂN THỊ VÙNG GIAO DIỆN (SECTION VISIBILITY)
+// ==========================================
+
+model SectionVisibility {
+  id                     String   @id @default("default")
+  showBadge              Boolean  @default(true) @map("show_badge")
+  showHeroStats          Boolean  @default(true) @map("show_hero_stats")
+  showHeroFeaturedCard   Boolean  @default(true) @map("show_hero_featured_card")
+  showSecondaryCTA       Boolean  @default(true) @map("show_secondary_cta")
+  showFloatingContact    Boolean  @default(true) @map("show_floating_contact")
+  showWorkshopLocation   Boolean  @default(true) @map("show_workshop_location")
+  showHotProductsSection Boolean  @default(true) @map("show_hot_products_section")
+  showTestimonials       Boolean  @default(true) @map("show_testimonials")
+  updatedAt              DateTime @updatedAt @map("updated_at")
+
+  @@map("section_visibilities")
+}
+
+// ==========================================
+// 16. CẤU HÌNH MENU ĐIỀU HƯỚNG HEADER (NAVIGATION MENU)
+// ==========================================
+
+model NavigationSettings {
+  id        String   @id @default("default")
+  items     Json     // Mảng các MenuItem: [{ id, label, url, badge, order, isVisible }]
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("navigation_settings")
+}
+
+
+
