@@ -122,6 +122,22 @@ export default function RootLayout({
   return (
     <html lang="vi" className={inter.variable}>
       <head>
+        {/* Google tag (gtag.js) - Google Ads Conversion Tracking */}
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=AW-18549767805"
+        />
+        <script
+          id="google-tag-gtag-init"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'AW-18549767805');
+            `,
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteSchema) }}
