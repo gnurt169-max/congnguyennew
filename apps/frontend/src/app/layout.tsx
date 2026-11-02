@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Script from 'next/script';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { AuthProvider } from '@/context/auth-context';
@@ -123,14 +122,13 @@ export default function RootLayout({
   return (
     <html lang="vi" className={inter.variable}>
       <head>
-        {/* Google tag (gtag.js) - Google Ads Conversion Tracking (Strategy: afterInteractive) */}
-        <Script
-          strategy="afterInteractive"
+        {/* Google tag (gtag.js) - Google Ads Conversion Tracking (Raw HTML in Head for Bot Scanning) */}
+        <script
+          async
           src="https://www.googletagmanager.com/gtag/js?id=AW-18549767805"
         />
-        <Script
-          id="google-tag-gtag-init"
-          strategy="afterInteractive"
+        <script
+          id="google-ads-gtag"
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
