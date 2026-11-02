@@ -16,8 +16,8 @@ module.exports = {
     {
       name: 'congnguyen-frontend',
       cwd: './apps/frontend',
-      script: 'node_modules/next/dist/bin/next',
-      args: 'start -p 3000',
+      script: 'npm',
+      args: 'start',
       instances: 1,
       autorestart: true,
       watch: false,
